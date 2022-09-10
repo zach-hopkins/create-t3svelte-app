@@ -1,0 +1,32 @@
+{
+  "name": "@zach-hopkins/create-t3svelte-app",
+  "version": "1.0.0",
+  "description": "Rapidly setup T3 Stack with SvelteKit",
+  "exports": "./index.js",
+  "bin": {
+    "@zach-hopkins/create-t3svelte-app": "bin/create-t3svelte-app.js",
+    "create-t3svelte-app": "bin/create-t3svelte-app.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "create-t3svelte-app"
+  ],
+  "author": "Zach Hopkins",
+  "license": "MIT",
+  "dependencies": {
+    "arg": "^5.0.2",
+    "chalk": "^5.0.1",
+    "execa": "^6.1.0",
+    "inquirer": "^9.1.1",
+    "listr": "^0.14.3",
+    "ncp": "^2.0.0",
+    "pkg-install": "^1.0.0"
+  }
+}
