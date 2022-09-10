@@ -42,6 +42,10 @@ npx create-t3svelte-app@latest
 
 A simple CLI with highly opioniated out-of-the-box ready SvelteKit/tRPC/Prisma/Tailwind application with CLI options: 'Standard' and 'Deluxe' (customization soon). Just run and start building.
 
+<h3> Prisma Reqs </h3>
+
+If you choose not to init DB on first build, you can initialize prisma db at any time by editing the DATABASE_URL in .env and then running `npx prisma db pull` and `npx prisma generate`. You can read more about Prisma on their docs <a href="https://www.prisma.io/docs/reference/api-reference/command-reference">Here</a>
+
 <h3>Standard</h3>
 <ul>
 <li><b>SvelteKit</b></li>
