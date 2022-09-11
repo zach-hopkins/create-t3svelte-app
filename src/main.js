@@ -18,6 +18,13 @@ async function copyTemplateFiles(options) {
 
  async function configureDatabase(options) {
     await copyEnvFile(options)
+    if (options.dbSolution == 'Other' || options.dbSolution == 'SQLite') {
+      //copy sqlite/main.db and sqlite/schema.prisma to options.targetDirectory
+    }
+    else if (options.dbSolution == 'MongoDB' || options.dbSolution == 'MySQL') {
+      const overwriteFolder = options.dbSolution.toLowerCase()
+      //copy overwriteFolder/schema.prisma to options.targetDirectory
+    }
     const resultPull = await execa('npx', ['prisma', 'db', 'pull'], {
         cwd:options.targetDirectory
     })
