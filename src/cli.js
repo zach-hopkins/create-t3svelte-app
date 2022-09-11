@@ -10,6 +10,7 @@ function parseArgumentsIntoOptions(rawArgs) {
         '--install': Boolean,
         '--db': Boolean,
         '--dbString': String,
+        '--dbSolution': String,
         '-g': '--git',
         '-y': '--yes',
         '-i': '--install',
@@ -25,7 +26,8 @@ function parseArgumentsIntoOptions(rawArgs) {
       template: args._[0],
       db: args['--db'] || false,
       runInstall: args['--install'] || false,
-      dbString: args['--dbString'] || ''
+      dbString: args['--dbString'] || '',
+      dbSolution: args['--dbSolution'] || '',
     };
    }
 
@@ -45,7 +47,7 @@ function parseArgumentsIntoOptions(rawArgs) {
         type: 'list',
         name: 'template',
         message: 'Please choose which project template to use',
-        choices: [ 'Standard', 'Deluxe'],
+        choices: [ 'Standard', 'Standard + UI Extras'],
         default: defaultTemplate,
       });
     }
@@ -72,24 +74,49 @@ function parseArgumentsIntoOptions(rawArgs) {
         questions.push({
         type: 'confirm',
         name: 'db',
-        message: 'Initialize Postgres DB w/ Prisma? (Requires DB URI String)',
+        message: 'Configure Database? (N = Unconfigured SQLite)',
         default: false,
       })
     }
+    
+    //Inquirer Fork 2 (if needed)
+    const dbSolutions = []
+    
+    dbSolutions.push({
+      type: 'list',
+      name: 'dbSolution',
+      message: 'What DB technology are you using? (first 3 require URI string)',
+      choices: ['Postgres', 'MySQL', 'MongoDB', 'SQLite', 'Other'],
+      default: 'Postgres'
+  })
 
+    //Inquirer Fork 3 (if needed)
     const dbQuestions = []
+
     dbQuestions.push({
         type: 'password',
         name: 'dbString',
         mask: true,
-        message: 'Enter Full DB URI String (Postgres)',
+        message: 'Enter Full DB URI String',
     })
-   
+
+
+    //Process Forks and Prompt Questions
     const answers = await inquirer.prompt(questions);
-    if (answers.db === true) {
-        var dbAnswers = await inquirer.prompt(dbQuestions)
-    }
-    else var dbAnswers = [{dbQuestions: ''}]
+    var requireURI = false
+
+    if (answers.db) 
+      var dbSolutionAnswers = await inquirer.prompt(dbSolutions)
+
+    if (dbSolutionAnswers)
+      requireURI = (dbSolutionAnswers.dbSolution == 'Postgres' || dbSolutionAnswers.dbSolution == 'MySQL' || dbSolutionAnswers.dbSolution == 'MongoDB') ? true : false;
+
+    if (answers.db && requireURI) 
+      var dbAnswers = await inquirer.prompt(dbQuestions)
+
+    //Handle Empty Options
+    else var dbAnswers = [{dbString: ''}]
+    if (!dbSolutionAnswers) var dbSolutionAnswers = [{dbSolution: ''}]
     
     return {
       ...options,
@@ -97,7 +124,8 @@ function parseArgumentsIntoOptions(rawArgs) {
       git: options.git || answers.git,
       runInstall: options.runInstall || answers.runInstall,
       db: options.db || answers.db,
-      dbString: dbAnswers.dbString
+      dbString: dbAnswers.dbString,
+      dbSolution: dbSolutionAnswers.dbSolution
     };
    }
 
