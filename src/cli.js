@@ -88,8 +88,8 @@ function parseArgumentsIntoOptions(rawArgs) {
     const answers = await inquirer.prompt(questions);
     if (answers.db === true) {
         var dbAnswers = await inquirer.prompt(dbQuestions)
-        
     }
+    else var dbAnswers = [{dbQuestions: ''}]
     
     return {
       ...options,
@@ -97,7 +97,7 @@ function parseArgumentsIntoOptions(rawArgs) {
       git: options.git || answers.git,
       runInstall: options.runInstall || answers.runInstall,
       db: options.db || answers.db,
-      dbString: options.dbString || dbAnswers.dbString
+      dbString: dbAnswers.dbString
     };
    }
 
