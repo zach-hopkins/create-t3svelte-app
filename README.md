@@ -54,7 +54,7 @@ This initial version is lacking significant polish that I hope to add in a new r
 
 ### Basics
 
-A simple CLI with highly opioniated out-of-the-box ready SvelteKit/tRPC/Prisma/Tailwind application with CLI options: 'Standard' and 'Deluxe' (customization soon). Just run and start building.
+A simple CLI with highly opioniated out-of-the-box ready SvelteKit/tRPC/Prisma/Tailwind application with CLI options: 'Standard' and 'Standard + UI Extras' (customization soon). Just run and start building.
 
 <h3>Standard</h3>
 <ul>
