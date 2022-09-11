@@ -115,8 +115,8 @@ function parseArgumentsIntoOptions(rawArgs) {
       var dbAnswers = await inquirer.prompt(dbQuestions)
 
     //Handle Empty Options
-    else var dbAnswers = [{dbString: ''}]
-    if (!dbSolutionAnswers) var dbSolutionAnswers = [{dbSolution: ''}]
+    else var dbAnswers = {dbString: ''}
+    if (!dbSolutionAnswers) var dbSolutionAnswers = {dbSolution: ''}
     
     return {
       ...options,
