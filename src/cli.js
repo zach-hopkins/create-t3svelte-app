@@ -47,7 +47,7 @@ function parseArgumentsIntoOptions(rawArgs) {
         type: 'list',
         name: 'template',
         message: 'Please choose which project template to use',
-        choices: [ 'Standard', 'Deluxe'],
+        choices: [ 'Standard', 'Standard + UI Extras'],
         default: defaultTemplate,
       });
     }
@@ -74,7 +74,7 @@ function parseArgumentsIntoOptions(rawArgs) {
         questions.push({
         type: 'confirm',
         name: 'db',
-        message: 'Import existing DB w/ Prisma? (Requires DB URI String)',
+        message: 'Configure Database? (N = Unconfigured SQLite)',
         default: false,
       })
     }
@@ -85,8 +85,8 @@ function parseArgumentsIntoOptions(rawArgs) {
     dbSolutions.push({
       type: 'list',
       name: 'dbSolution',
-      message: 'What DB technology are you using?',
-      choices: ['Postgres', 'SQLite', 'MySQL', 'MongoDB', 'Other'],
+      message: 'What DB technology are you using? (first 3 require URI string)',
+      choices: ['Postgres', 'MySQL', 'MongoDB', 'SQLite', 'Other'],
       default: 'Postgres'
   })
 
@@ -132,7 +132,6 @@ function parseArgumentsIntoOptions(rawArgs) {
 export default async function cli(args) {
      let options = parseArgumentsIntoOptions(args);
      options = await promptForMissingOptions(options);
-     console.log(options)
      await createT3SvelteApp(options)
    }
    

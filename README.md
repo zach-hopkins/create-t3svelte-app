@@ -34,7 +34,7 @@
   <br />✅ Efficient styling with <a href="https://tailwindcss.com/">Tailwind CSS</a>.
 </p>
 
-### NPM
+### NPM & Yarn
 
 ```bash
 npx create-t3svelte-app@latest
@@ -45,7 +45,7 @@ npx create-t3svelte-app@latest
 This initial version is lacking significant polish that I hope to add in a new release shortly, including:
 <ul>
 <li> Less Opinions, More Customization (including prettier/eslint not as forced defaults) </li>
-<li> SQLite as Prisma.schema default </li>
+<li> SQLite as Prisma.schema default ✅ </li>
 <li> Helper comments </li>
 <li> Package Manager Support </li>
 </ul>
@@ -64,7 +64,7 @@ A simple CLI with highly opioniated out-of-the-box ready SvelteKit/tRPC/Prisma/T
 <li><b>Prisma ORM</b> - CLI option to initialize DB on run - no need to run prisma db pull or prisma db generate </li>
 </ul>
 
-<h3>Deluxe (UI Extras)</h3>
+<h3>Standard + UI Extras</h3>
 <ul>
 <li><b>Standard</b></li>
 <li><b>Headless UI</b>
