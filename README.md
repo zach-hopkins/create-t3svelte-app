@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://user-images.githubusercontent.com/43737355/189502485-be99e3ce-272b-49a9-abe8-5496238dfbb3.png" alt="T3-SvelteKit" />
 </p>
-<h1 align="center">✨T3 + SvelteKit✨</h1>
+<h1 align="center">create-t3svelte-app</h1>
 <p align="center">
   <img src="https://img.shields.io/badge/PRs-welcome-blue.svg"/>
   <a href="https://npmjs.org/package/create-t3svelte-app">
@@ -20,17 +20,21 @@
 </p>
 
 <p align="center">
+<br />
   <b>Just Build </b>
   <br />
-  <br />✅ Elegant and performant full-stack development framework with <a href="https://kit.svelte.dev/">SvelteKit</a>.
+<code>npx create-t3-app</code>
+<br />
+
+## Get Building
+  ✅ Elegant full-stack framework with <a href="https://kit.svelte.dev/">SvelteKit</a>.
+  <br />✅ Static typing support with <a href="https://typescriptlang.org">TypeScript</a>
   <br />✅ End-to-end typesafe APIs with <a href="https://trpc.io">tRPC.io</a>
   <br />✅ Enjoyable database interaction with <a href="https://www.prisma.io/">Prisma</a> ORM.
   <br />✅ Efficient styling with <a href="https://tailwindcss.com/">Tailwind CSS</a>.
 </p>
 
-## Start Building
-
-### npm
+### NPM
 
 ```bash
 npx create-t3svelte-app@latest
@@ -43,7 +47,7 @@ This initial version is lacking significant polish that I hope to add in a new r
 <li> Less Opinions, More Customization (including prettier/eslint not as forced defaults) </li>
 <li> SQLite as Prisma.schema default </li>
 <li> Helper comments </li>
-<li> Other stuff </li>
+<li> Package Manager Support </li>
 </ul>
 
 ## More Info 🛠
