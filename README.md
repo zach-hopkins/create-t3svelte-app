@@ -79,6 +79,8 @@ If you choose not to init DB on first build, you can initialize prisma db at any
 
 <a href="https://t3.gg/">Theo @ T3</a> for T3 Stack inspiration!
 <br />
+<a href="https://github.com/nexxeln">Nexxel</a> for the OG create-t3-app!
+<br />
 <a href="https://github.com/icflorescu/trpc-sveltekit"> Ionut-Cristian Florescu</a> for his wonderful work on SvelteKit + tRPC & SSR Info!
 <br />
 <a href="https://github.com/rgossiaux"> Ryan Gossiaux</a> for enabling TailwindUI & HeadlessUI on Svelte!
