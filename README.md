@@ -27,7 +27,7 @@
 <br />
 
 ## Get Building
-  ✅ Elegant full-stack framework with <a href="https://kit.svelte.dev/">SvelteKit</a>.
+  ✅ Elegant full-stack framework powered by <a href="https://kit.svelte.dev/">SvelteKit</a>.
   <br />✅ Static typing support with <a href="https://typescriptlang.org">TypeScript</a>
   <br />✅ End-to-end typesafe APIs with <a href="https://trpc.io">tRPC.io</a>
   <br />✅ Enjoyable database interaction with <a href="https://www.prisma.io/">Prisma</a> ORM.
