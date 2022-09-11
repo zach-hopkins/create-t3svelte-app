@@ -9,6 +9,7 @@ function parseArgumentsIntoOptions(rawArgs) {
         '--yes': Boolean,
         '--install': Boolean,
         '--db': Boolean,
+        '--dbString': String,
         '-g': '--git',
         '-y': '--yes',
         '-i': '--install',
@@ -24,6 +25,7 @@ function parseArgumentsIntoOptions(rawArgs) {
       template: args._[0],
       db: args['--db'] || false,
       runInstall: args['--install'] || false,
+      dbString: args['--dbString'] || ''
     };
    }
 
@@ -95,7 +97,7 @@ function parseArgumentsIntoOptions(rawArgs) {
       git: options.git || answers.git,
       runInstall: options.runInstall || answers.runInstall,
       db: options.db || answers.db,
-      dbString: '' || dbAnswers.dbString
+      dbString: options.dbString || dbAnswers.dbString
     };
    }
 
