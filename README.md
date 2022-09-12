@@ -63,7 +63,7 @@ npx create-t3svelte-app@latest
 ### yarn
 
 ```bash
-yarn create-t3svelte-app
+yarn create t3svelte-app
 ```
 
 ## More Info 🛠
