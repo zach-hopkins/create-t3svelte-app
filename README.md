@@ -75,6 +75,12 @@ A simple CLI with highly opioniated out-of-the-box ready SvelteKit/tRPC/Prisma/T
 
 If you choose not to init DB on first build, you can initialize prisma db at any time by editing the DATABASE_URL in .env and then running `npx prisma db pull` and `npx prisma generate`. You can read more about Prisma on their docs <a href="https://www.prisma.io/docs/reference/api-reference/command-reference">Here</a>
 
+## Contributing
+
+See a bug? Want to help? Easiest way is to just clone the Dev repo and run `npm link` in the cloned directory. You can code and then run `create-t3svelte-app` in any directory.
+
+`npm unlink create-t3svelte-app` to undo.
+
 ### Shoutouts
 
 <a href="https://t3.gg/">Theo @ T3</a> for T3 Stack inspiration!
@@ -128,7 +134,7 @@ export const load: Load = async ({ fetch }) => { // 👈 make sure to pass in th
 Your server responses must [satisfy some criteria](https://vercel.com/docs/concepts/functions/edge-caching) in order for them to be cached Vercel Edge Network, and here's where tRPC's `responseMeta()` comes in handy. You could initialize your handle in `src/hooks.ts` like so: 
 
 ```ts
-// src/hooks.ts or src/hooks/index.ts
+// src/hooks.server.ts
 import { router } from '$lib/trpcServer';
 import { createTRPCHandle } from 'trpc-sveltekit';
 
