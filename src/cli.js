@@ -11,6 +11,7 @@ function parseArgumentsIntoOptions(rawArgs) {
         '--db': Boolean,
         '--dbString': String,
         '--dbSolution': String,
+        '--dbOperation': String,
         '-g': '--git',
         '-y': '--yes',
         '-i': '--install',
@@ -28,6 +29,7 @@ function parseArgumentsIntoOptions(rawArgs) {
       runInstall: args['--install'] || false,
       dbString: args['--dbString'] || '',
       dbSolution: args['--dbSolution'] || '',
+      dbOperation: args['--dbOperation'] || ''
     };
    }
 
@@ -74,7 +76,7 @@ function parseArgumentsIntoOptions(rawArgs) {
         questions.push({
         type: 'confirm',
         name: 'db',
-        message: 'Configure Database? (N = Unconfigured SQLite)',
+        message: 'Configure Database? (N = SQLite Template)',
         default: false,
       })
     }
@@ -100,6 +102,14 @@ function parseArgumentsIntoOptions(rawArgs) {
         message: 'Enter Full DB URI String',
     })
 
+    dbQuestions.push({
+      type: 'list',
+      name: 'dbOperation',
+      message: 'Init new DB schema (blank DB) or import schema from existing DB?',
+      choices: [ 'New Schema', 'Import Existing Schema'],
+      default: 'New Schema'
+    })
+
 
     //Process Forks and Prompt Questions
     const answers = await inquirer.prompt(questions);
@@ -115,7 +125,12 @@ function parseArgumentsIntoOptions(rawArgs) {
       var dbAnswers = await inquirer.prompt(dbQuestions)
 
     //Handle Empty Options
-    else var dbAnswers = {dbString: 'none'}
+    else { 
+      var dbAnswers = {
+        dbString: 'none',
+        dbOperation: 'New Schema'
+      } 
+    }
     if (!dbSolutionAnswers) var dbSolutionAnswers = {dbSolution: 'none'}
 
     return {
@@ -125,6 +140,7 @@ function parseArgumentsIntoOptions(rawArgs) {
       runInstall: options.runInstall || answers.runInstall,
       db: options.db || answers.db,
       dbString: dbAnswers.dbString,
+      dbOperation: dbAnswers.dbOperation,
       dbSolution: dbSolutionAnswers.dbSolution
     };
    }
