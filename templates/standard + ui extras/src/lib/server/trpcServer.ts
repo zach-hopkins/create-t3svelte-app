@@ -27,7 +27,7 @@ export const router = trpc
 	.query('getUser', {
 		input: z.number(),
 		resolve: ({ input }) =>
-			prismaClient.users.findFirst({
+			prismaClient.user.findFirst({
 				select: {
 					email: true,
 				},
