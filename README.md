@@ -23,7 +23,7 @@
 <br />
   <b>Just Build </b>
   <br />
-<code>npx create-t3-app</code>
+<code>npx create-t3svelte-app</code>
 <br />
 
 ## Get Building
