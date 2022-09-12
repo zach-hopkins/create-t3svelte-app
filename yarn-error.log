@@ -1,0 +1,66 @@
+Arguments: 
+  /home/zach/.nvm/versions/node/v18.8.0/bin/node /home/zach/.nvm/versions/node/v18.8.0/bin/yarn login
+
+PATH: 
+  /home/zach/.local/share/pnpm:/home/zach/.nvm/versions/node/v18.8.0/bin:/home/zach/.local/share/pnpm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.8.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (/home/zach/.nvm/versions/node/v18.8.0/lib/node_modules/yarn/lib/cli.js:137150:13)
+      at Interface.emit (node:events:513:28)
+      at [_ttyWrite] [as _ttyWrite] (node:internal/readline/interface:1124:18)
+      at ReadStream.onkeypress (node:internal/readline/interface:273:20)
+      at ReadStream.emit (node:events:513:28)
+      at emitKeys (node:internal/readline/utils:357:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (node:internal/readline/emitKeypressEvents:64:36)
+      at ReadStream.emit (node:events:513:28)
+      at addChunk (node:internal/streams/readable:324:12)
+
+npm manifest: 
+  {
+    "name": "create-t3svelte-app",
+    "version": "1.0.3",
+    "description": "Rapidly setup T3 Stack with SvelteKit",
+    "exports": "./index.js",
+    "bin": {
+      "create-t3svelte-app": "bin/create-t3svelte-app.js"
+    },
+    "publishConfig": {
+      "access": "public"
+    },
+    "type": "module",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+      "cli",
+      "create-t3svelte-app"
+    ],
+    "author": "Zach Hopkins",
+    "license": "MIT",
+    "dependencies": {
+      "arg": "^5.0.2",
+      "chalk": "^5.0.1",
+      "execa": "^6.1.0",
+      "inquirer": "^9.1.1",
+      "listr": "^0.14.3",
+      "ncp": "^2.0.0",
+      "pkg-install": "^1.0.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
