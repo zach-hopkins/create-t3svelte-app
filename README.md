@@ -128,7 +128,7 @@ export const load: Load = async ({ fetch }) => { // 👈 make sure to pass in th
 Your server responses must [satisfy some criteria](https://vercel.com/docs/concepts/functions/edge-caching) in order for them to be cached Verced Edge Network, and here's where tRPC's `responseMeta()` comes in handy. You could initialize your handle in `src/hooks.ts` like so: 
 
 ```ts
-// src/hooks.ts or src/hooks/index.ts
+// src/hooks.server.ts
 import { router } from '$lib/trpcServer';
 import { createTRPCHandle } from 'trpc-sveltekit';
 
