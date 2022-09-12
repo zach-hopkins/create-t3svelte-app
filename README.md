@@ -9,10 +9,10 @@
   <a href="https://npmjs.org/package/create-t3svelte-app">
     <img src="https://img.shields.io/npm/v/create-t3svelte-app.svg?style=flat-square" alt="NPM version" style="max-width: 100%;" />
   </a>
-  <a href="/icflorescu/create-t3svelte-app/blob/main/LICENSE">
+  <a href="/zach-hopkins/create-t3svelte-app/blob/main/LICENSE">
     <img src="http://img.shields.io/npm/l/create-t3svelte-app.svg?style=flat-square" alt="License" style="max-width: 100%;" />
   </a>
-  <a href="https://github.com/icflorescu/create-t3svelte-app">
+  <a href="https://github.com/zach-hopkins/create-t3svelte-app">
     <img src="https://img.shields.io/github/stars/zach-hopkins/create-t3svelte-app?style=flat-square" alt="Stars" style="max-width: 100%;" />
   </a>
   <a href="https://npmjs.org/package/create-t3svelte-app">

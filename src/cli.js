@@ -11,7 +11,7 @@ function parseArgumentsIntoOptions(rawArgs) {
         '--db': Boolean,
         '--dbString': String,
         '--dbSolution': String,
-        'dbOperation': String,
+        '--dbOperation': String,
         '-g': '--git',
         '-y': '--yes',
         '-i': '--install',
