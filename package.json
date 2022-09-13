@@ -1,6 +1,6 @@
 {
   "name": "create-t3svelte-app",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Rapidly setup T3 Stack with SvelteKit",
   "exports": "./index.js",
   "bin": {
