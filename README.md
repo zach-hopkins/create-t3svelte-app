@@ -100,7 +100,7 @@ A simple CLI with highly opinionated, out-of-the-box ready SvelteKit/tRPC/Prisma
 
 ## Contributing
 
-See a bug? Want to help? Easiest way is to clone the Dev repo and run `npm link` in the cloned directory. You can code and then run `create-t3svelte-app` in any directory.
+See a bug? Want to help? Easiest way is to clone the main repo and run `npm link` in the cloned directory. You can code and then run `create-t3svelte-app` in any directory.
 
 ```bash
 git clone https://github.com/zach-hopkins/create-t3svelte-app
