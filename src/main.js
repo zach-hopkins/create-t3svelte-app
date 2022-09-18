@@ -4,9 +4,11 @@ import ncp from 'ncp'
 import path from 'path'
 import { promisify } from 'util'
 import { execa } from 'execa'
+import { fileURLToPath } from 'url';
 import Listr from 'listr'
 import { projectInstall } from 'pkg-install'
 
+const __filename = fileURLToPath(import.meta.url);
 const access = promisify(fs.access)
 const copy = promisify(ncp)
 
@@ -78,7 +80,7 @@ export async function createT3SvelteApp(options) {
 		targetDirectory: options.targetDirectory || process.cwd(),
 	}
 
-	const templateDir = path.resolve(process.cwd(), '../templates', options.template.toLowerCase())
+	const templateDir = path.resolve(__filename, '../../templates', options.template.toLowerCase())
 	options.templateDirectory = templateDir
 
 	try {
