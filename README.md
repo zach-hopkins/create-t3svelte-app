@@ -33,12 +33,10 @@
 * [Get Building](#get-building)
   * [npm](#npm)
   * [yarn](#yarn)
-* [More Info 🛠](#more-info-)
-  * [Early Version Note](#early-version-note)
   * [Prisma Requirements](#prisma-requirements)
 * [Available Templates](#available-templates)
-  * [Standard](#standard)
-  * [Standard + UI Extras](#standard--ui-extras)
+  * [Standard](#standard-recommended)
+  * [Custom (Modular)](#custom-modular-build)
 * [Contributing](#contributing)
 * [Caveats & Addendums](#caveats--addendums)
   * [Server-Side Rendering](#server-side-rendering)
@@ -47,6 +45,7 @@
 * [License](#license)
 
 ## Get Building
+<h4><i> create-t3svelte-app is completely modular. Choose the components you need! </i></h4>
 
 ✅ Elegant full-stack framework powered by [SvelteKit](https://kit.svelte.dev/)  
 ✅ Static typing support with [TypeScript](https://typescriptlang.org)  
@@ -66,37 +65,46 @@ npx create-t3svelte-app@latest
 yarn create t3svelte-app
 ```
 
-## More Info 🛠
-
-### Early Version Note
-
-This initial version is lacking significant polish that I hope to add in a new release shortly, including:
-
-- Less Opinions, More Customization (including prettier/eslint not as forced defaults)
-- SQLite as `schema.prisma` default ✅
-- Helper comments
-- Package Manager Support
-
 ### Prisma Requirements
 
 If you choose not to init DB on first build, you can initialize prisma db at any time by editing the `DATABASE_URL` in `.env` and then running `npx prisma db pull` and `npx prisma generate`. You can read more about Prisma on their [docs](https://www.prisma.io/docs/reference/api-reference/command-reference).
 
 ## Available Templates
 
-A simple CLI with highly opinionated, out-of-the-box ready SvelteKit/tRPC/Prisma/Tailwind application. CLI options include 'Standard' and 'Standard + UI Extras' (customization soon). Just run and start building.
+A simple CLI with highly opinionated, out-of-the-box ready SvelteKit/tRPC/Prisma/Tailwind application. CLI options include 'Standard' and 'Custom' (modular build). Just run and start building.
 
-### Standard
+### Standard (Recommended)
 
 - **SvelteKit**
+- **TypeScript**
 - **tRPC** - preconfigured with example API call in `+page.svelte`
 - **Tailwind CSS** - preconfigured with eslint/prettier & 'tailwind prettier plugin' integration
 - **Prisma ORM** - CLI option to initialize DB on run - no need to run `prisma db pull` or `prisma db generate`
 
-### Standard + UI Extras
+### Custom (Modular Build)
 
-- **Standard**
-- **Headless UI**
-- **HeroIcons**
+#### Tech Stack Options:
+
+- SvelteKit
+- TypeScript || JavaScript
+- tRPC
+- Tailwind CSS
+- Prisma ORM
+
+#### Tool Options:
+
+- ESLint
+- Prettier
+- Tailwind Prettier Plugin
+- Prisma ORM
+- Svelte Headless UI
+- Svelte HeroIcons
+
+#### Config Options:
+
+- Git Init
+- DB Auto Configure w/ Prisma (Postgresql, MySQL, MongoDB, SQLite)
+- Auto Dependency Install
 
 ## Contributing
 
@@ -196,3 +204,4 @@ export const handle = async ({ event, resolve }) => {
 ## License
 
 [MIT](/LICENSE)
+

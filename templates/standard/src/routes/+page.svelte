@@ -1,7 +1,9 @@
 <script lang="ts">
-	//import trpc from '$lib/client/trpc'
+	//import trpc from '$lib/client/trpc' - tRPC Demo
 
-	/* EXAMPLE Client Call */
+	//import { SelectorIcon } from '@rgossiaux/svelte-heroicons/solid' - HeroIcons Demo
+
+	/* EXAMPLE Client Call tRPC */ 
 	/* const getUser = async () => {
 		const user = await trpc().query('[YOUR_FUNCTION]', 1)
 		if (user) console.log(user.email)
@@ -15,4 +17,4 @@
 		alt="T3-SvelteKit"
 		class=" text-center" />
 </div>
-<p class="text-center text-2xl font-semibold">Welcome to T3 SvelteKit</p>
+<p class="text-center text-2xl font-semibold tailwind-demo">Welcome to T3 SvelteKit</p>

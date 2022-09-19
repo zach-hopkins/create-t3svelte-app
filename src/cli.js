@@ -1,153 +1,250 @@
-import arg from 'arg';
-import inquirer from 'inquirer';
-import { createT3SvelteApp } from './main.js';
+import arg from 'arg'
+import inquirer from 'inquirer'
+import { createT3SvelteApp } from './main.js'
 
 function parseArgumentsIntoOptions(rawArgs) {
-    const args = arg(
-      {
-        '--git': Boolean,
-        '--yes': Boolean,
-        '--install': Boolean,
-        '--db': Boolean,
-        '--dbString': String,
-        '--dbSolution': String,
-        '--dbOperation': String,
-        '-g': '--git',
-        '-y': '--yes',
-        '-i': '--install',
-        '-d': '--db'
-      },
-      {
-        argv: rawArgs.slice(2),
-      }
-    );
-    return {
-      skipPrompts: args['--yes'] || false,
-      git: args['--git'] || false,
-      template: args._[0],
-      db: args['--db'] || false,
-      runInstall: args['--install'] || false,
-      dbString: args['--dbString'] || '',
-      dbSolution: args['--dbSolution'] || '',
-      dbOperation: args['--dbOperation'] || ''
-    };
-   }
+	const args = arg(
+		{
+			'--yes': Boolean,
+		},
+		{
+			argv: rawArgs.slice(2),
+		}
+	)
+	return {
+		skipPrompts: args['--yes'] || false,
+		template: args._[0],
+	}
+}
 
+async function promptForMissingOptions(options) {
+	const defaultTemplate = 'Standard'
+	if (options.skipPrompts) {
+		return {
+			...options,
+			template: options.template || defaultTemplate,
+		}
+	}
 
-   async function promptForMissingOptions(options) {
-    const defaultTemplate = 'Standard';
-    if (options.skipPrompts) {
-      return {
-        ...options,
-        template: options.template || defaultTemplate,
-      };
+	const baseQuestion = []
+	if (!options.template) {
+		baseQuestion.push({
+			type: 'list',
+			name: 'template',
+			message: 'Please choose which project template to use',
+			choices: ['Standard', 'Custom: TypeScript', 'Custom: JavaScript'],
+			default: defaultTemplate,
+		})
+	}
+
+	const typeScriptQuestions = []
+
+	typeScriptQuestions.push({
+		type: 'checkbox',
+		name: 'options',
+		message: 'Please choose tech stack options',
+		choices: [
+			{ name: 'tRPC', checked: true },
+			{ name: 'Prisma ORM', checked: true },
+			{ name: 'Tailwind CSS', checked: true },
+		],
+	})
+
+	const javaScriptQuestions = []
+
+	javaScriptQuestions.push({
+		type: 'checkbox',
+		name: 'options',
+		message: 'Please choose tech stack options',
+		choices: [
+			{ name: 'Prisma ORM', checked: true },
+			{ name: 'Tailwind CSS', checked: true },
+		],
+	})
+
+	let toolQuestions = []
+
+	toolQuestions.push({
+		type: 'checkbox',
+		name: 'options',
+		message: 'Please choose tech stack options',
+		choices: [
+			{ name: 'ESLint', checked: true },
+			{ name: 'Prettier', checked: true },
+			{ name: 'Tailwind Prettier', checked: true },
+			{ name: 'Headless UI' },
+			{ name: 'HeroIcons' },
+		],
+	})
+
+	const configQuestions = []
+	const configQuestionsNoPrisma = []
+
+	configQuestions.push({
+		type: 'checkbox',
+		name: 'options',
+		message: 'Please choose config options',
+		choices: [
+			{ name: 'Configure database', checked: true },
+			{ name: 'Init .git', checked: true },
+			{ name: 'Auto install dependencies', checked: true },
+		],
+	})
+
+	configQuestionsNoPrisma.push({
+		type: 'checkbox',
+		name: 'options',
+		message: 'Please choose config options',
+		choices: [
+			{ name: 'Init .git', checked: true },
+			{ name: 'Auto install dependencies', checked: true },
+		],
+	})
+
+	//Inquirer Fork 2 (if needed)
+	const dbSolutions = []
+
+	dbSolutions.push({
+		type: 'list',
+		name: 'dbSolution',
+		message: 'What DB technology are you using? (first 3 require URI string)',
+		choices: ['Postgres', 'MySQL', 'MongoDB', 'SQLite', 'Other'],
+		default: 'Postgres',
+	})
+
+	//Inquirer Fork 3 (if needed)
+	const dbQuestions = []
+
+	dbQuestions.push({
+		type: 'password',
+		name: 'dbString',
+		mask: true,
+		message: 'Enter Full DB URI String',
+	})
+
+	dbQuestions.push({
+		type: 'list',
+		name: 'dbOperation',
+		message: 'Init new DB schema (blank DB) or import schema from existing DB?',
+		choices: ['New Schema', 'Import Existing Schema'],
+		default: 'New Schema',
+	})
+
+	/*                                    */
+	/* Process Forks and Prompt Questions */
+
+	const baseTemplate = await inquirer.prompt(baseQuestion) //get base template
+	let techOptions = []
+  let toolOptions = []
+	let requireURI = false
+  let isStandard = false
+
+	switch (baseTemplate.template) {
+		case 'Custom: TypeScript':
+			techOptions = (await inquirer.prompt(typeScriptQuestions)).options
+			techOptions.push('TypeScript')
+			break
+		case 'Custom: JavaScript':
+			techOptions = (await inquirer.prompt(javaScriptQuestions)).options
+			techOptions.push('JavaScript')
+			break
+		default: //standard
+			techOptions = ['tRPC', 'Prisma ORM', 'Tailwind CSS', 'TypeScript']
+      isStandard = true
+	}
+
+  if (!isStandard) {
+    if (techOptions.includes('Tailwind CSS'))
+	    toolOptions = (await inquirer.prompt(toolQuestions)).options
+    else //remove tailwind prettier from options
+    {
+      const tailwindPrettierIndex = toolQuestions[0].choices.map(object => object.name).indexOf('Tailwind Prettier')
+      toolQuestions[0].choices = [...toolQuestions[0].choices.slice(0, tailwindPrettierIndex), ...toolQuestions[0].choices.slice(tailwindPrettierIndex + 1)]
+      toolOptions = (await inquirer.prompt(toolQuestions)).options
     }
-   
-    const questions = [];
-    if (!options.template) {
-      questions.push({
-        type: 'list',
-        name: 'template',
-        message: 'Please choose which project template to use',
-        choices: [ 'Standard', 'Standard + UI Extras'],
-        default: defaultTemplate,
-      });
-    }
-   
-    if (!options.git) {
-      questions.push({
-        type: 'confirm',
-        name: 'git',
-        message: 'Initialize a git repository?',
-        default: false,
-      });
-    }
+  }
+  else { //if Standard
+    toolOptions = ['ESLint', 'Prettier', 'Tailwind Prettier']
+  }
 
-    if (!options.runInstall) {
-        questions.push({
-          type: 'confirm',
-          name: 'runInstall',
-          message: 'Automatically install dependencies?',
-          default: false,
-        });
-      }
-    
-    if (!options.db) { 
-        questions.push({
-        type: 'confirm',
-        name: 'db',
-        message: 'Configure Database? (N = SQLite Template)',
-        default: false,
-      })
-    }
-    
-    //Inquirer Fork 2 (if needed)
-    const dbSolutions = []
-    
-    dbSolutions.push({
-      type: 'list',
-      name: 'dbSolution',
-      message: 'What DB technology are you using? (first 3 require URI string)',
-      choices: ['Postgres', 'MySQL', 'MongoDB', 'SQLite', 'Other'],
-      default: 'Postgres'
-  })
+	if (techOptions.includes('Prisma ORM'))
+		var configOptions = (await inquirer.prompt(configQuestions)).options
+	else var configOptions = (await inquirer.prompt(configQuestionsNoPrisma)).options
 
-    //Inquirer Fork 3 (if needed)
-    const dbQuestions = []
+	const needsDatabase = configOptions.includes('Configure database') ? true : false
+	if (needsDatabase) var dbSolutionAnswers = await inquirer.prompt(dbSolutions)
 
-    dbQuestions.push({
-        type: 'password',
-        name: 'dbString',
-        mask: true,
-        message: 'Enter Full DB URI String',
-    })
+	if (dbSolutionAnswers)
+		requireURI =
+			dbSolutionAnswers.dbSolution == 'Postgres' ||
+			dbSolutionAnswers.dbSolution == 'MySQL' ||
+			dbSolutionAnswers.dbSolution == 'MongoDB'
+				? true
+				: false
 
-    dbQuestions.push({
-      type: 'list',
-      name: 'dbOperation',
-      message: 'Init new DB schema (blank DB) or import schema from existing DB?',
-      choices: [ 'New Schema', 'Import Existing Schema'],
-      default: 'New Schema'
-    })
+	if (needsDatabase && requireURI) var dbAnswers = await inquirer.prompt(dbQuestions)
+	//Handle Empty Options
+	else {
+		var dbAnswers = {
+			dbString: 'none',
+			dbOperation: 'New Schema',
+		}
+	}
+	if (!dbSolutionAnswers) var dbSolutionAnswers = { dbSolution: 'none' }
 
+	//Manage Options
+	const template = baseTemplate.template
 
-    //Process Forks and Prompt Questions
-    const answers = await inquirer.prompt(questions);
-    var requireURI = false
+	//Tech Stack
+	const trpc = techOptions.includes('tRPC')
+	const prisma = techOptions.includes('Prisma ORM')
+	const scriptLang = techOptions.includes('TypeScript') ? 'TypeScript' : 'JavaScript'
+	const tailwind = techOptions.includes('Tailwind CSS')
 
-    if (answers.db) 
-      var dbSolutionAnswers = await inquirer.prompt(dbSolutions)
+	//Tooling
+	const eslint = toolOptions.includes('ESLint')
+	const prettier = toolOptions.includes('Prettier')
+	const tailwindPrettier = (toolOptions.includes('Tailwind Prettier') && prettier) ? true : false
+	const headlessUI = toolOptions.includes('Headless UI')
+	const heroIcons = toolOptions.includes('HeroIcons')
 
-    if (dbSolutionAnswers)
-      requireURI = (dbSolutionAnswers.dbSolution == 'Postgres' || dbSolutionAnswers.dbSolution == 'MySQL' || dbSolutionAnswers.dbSolution == 'MongoDB') ? true : false;
+	//Configs
+	const git = configOptions.includes('Init .git')
+	const runInstall = configOptions.includes('Auto install dependencies')
+	const db = configOptions.includes('Configure database')
 
-    if (answers.db && requireURI) 
-      var dbAnswers = await inquirer.prompt(dbQuestions)
+	return {
+		...options,
+		template: options.template || template,
 
-    //Handle Empty Options
-    else { 
-      var dbAnswers = {
-        dbString: 'none',
-        dbOperation: 'New Schema'
-      } 
-    }
-    if (!dbSolutionAnswers) var dbSolutionAnswers = {dbSolution: 'none'}
+		//Tech Stack
+		scriptLang: scriptLang,
+		optionals: {
+			trpc: trpc,
+			prisma: prisma,
+			tailwind: tailwind,
 
-    return {
-      ...options,
-      template: options.template || answers.template,
-      git: options.git || answers.git,
-      runInstall: options.runInstall || answers.runInstall,
-      db: options.db || answers.db,
-      dbString: dbAnswers.dbString,
-      dbOperation: dbAnswers.dbOperation,
-      dbSolution: dbSolutionAnswers.dbSolution
-    };
-   }
+			//Tooling
+			eslint: eslint,
+			prettier: prettier,
+			tailwindPrettier: tailwindPrettier,
+			headlessUI: headlessUI,
+			heroIcons: heroIcons,
+		},
+		//Configs
+		git: git,
+		runInstall: runInstall,
+		db: db,
+
+		//DB Specific
+		dbString: dbAnswers.dbString,
+		dbOperation: dbAnswers.dbOperation,
+		dbSolution: dbSolutionAnswers.dbSolution,
+	}
+}
 
 export default async function cli(args) {
-     let options = parseArgumentsIntoOptions(args);
-     options = await promptForMissingOptions(options);
-     await createT3SvelteApp(options)
-   }
-   
+	let options = parseArgumentsIntoOptions(args)
+	options = await promptForMissingOptions(options)
+	await createT3SvelteApp(options)
+}

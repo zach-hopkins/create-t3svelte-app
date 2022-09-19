@@ -1,0 +1,1 @@
+npm install --save -D --package-lock-only --no-package-lock prettier prettier-plugin-svelte eslint eslint-plugin-svelte3 @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-config-prettier
