@@ -90,22 +90,16 @@ async function configureDatabase(options) {
 	await copyEnvFile(options)
 	const operation = options.dbOperation == 'Import Existing Schema' ? 'pull' : 'push'
 	const basePath = options.templateDirectory.split('/templates')[0]
-	if (options.dbSolution == 'Postgres') {
-		//copy postgres/schema.prisma to options.targetDirectory
-		const customOptions = {
-			targetDirectory: options.targetDirectory,
-			templateDirectory: basePath + '/overwrites/postgres',
-		}
-		await copyTemplateFiles(customOptions)
-	} else if (options.dbSolution == 'MongoDB' || options.dbSolution == 'MySQL') {
-		const overwriteFolder = options.dbSolution.toLowerCase()
-		//copy overwriteFolder/schema.prisma to options.targetDirectory
-		const customOptions = {
-			targetDirectory: options.targetDirectory,
-			templateDirectory: basePath + '/overwrites/' + overwriteFolder,
-		}
-		await copyTemplateFiles(customOptions)
+	const overwriteFolder = options.dbSolution.toLowerCase()
+	const customOptions = {
+		targetDirectory: options.targetDirectory,
+		templateDirectory: basePath + '/overwrites/' + overwriteFolder
 	}
+
+	const overwriteRequired = ['postgres', 'mysql', 'mongodb'] //add DBs requiring overwrite here
+	if (overwriteRequired.includes(overwriteFolder)) //guard clause to only overwrite when needed (Postgres, mySQL, mongodb etc) 
+			await copyTemplateFiles(customOptions)
+
 	const resultPull = await execa('npx', ['prisma', 'db', operation], {
 		cwd: options.targetDirectory,
 	})

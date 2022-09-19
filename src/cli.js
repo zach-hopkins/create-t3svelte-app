@@ -135,9 +135,9 @@ async function promptForMissingOptions(options) {
 
 	const baseTemplate = await inquirer.prompt(baseQuestion) //get base template
 	let techOptions = []
-  let toolOptions = []
+	let toolOptions = []
 	let requireURI = false
-  let isStandard = false
+	let isStandard = false
 
 	switch (baseTemplate.template) {
 		case 'Custom: TypeScript':
@@ -150,22 +150,27 @@ async function promptForMissingOptions(options) {
 			break
 		default: //standard
 			techOptions = ['tRPC', 'Prisma ORM', 'Tailwind CSS', 'TypeScript']
-      isStandard = true
+			isStandard = true
 	}
 
-  if (!isStandard) {
-    if (techOptions.includes('Tailwind CSS'))
-	    toolOptions = (await inquirer.prompt(toolQuestions)).options
-    else //remove tailwind prettier from options
-    {
-      const tailwindPrettierIndex = toolQuestions[0].choices.map(object => object.name).indexOf('Tailwind Prettier')
-      toolQuestions[0].choices = [...toolQuestions[0].choices.slice(0, tailwindPrettierIndex), ...toolQuestions[0].choices.slice(tailwindPrettierIndex + 1)]
-      toolOptions = (await inquirer.prompt(toolQuestions)).options
-    }
-  }
-  else { //if Standard
-    toolOptions = ['ESLint', 'Prettier', 'Tailwind Prettier']
-  }
+	if (!isStandard) {
+		if (techOptions.includes('Tailwind CSS'))
+			toolOptions = (await inquirer.prompt(toolQuestions)).options
+		//remove tailwind prettier from options
+		else {
+			const tailwindPrettierIndex = toolQuestions[0].choices
+				.map((object) => object.name)
+				.indexOf('Tailwind Prettier')
+			toolQuestions[0].choices = [
+				...toolQuestions[0].choices.slice(0, tailwindPrettierIndex),
+				...toolQuestions[0].choices.slice(tailwindPrettierIndex + 1),
+			]
+			toolOptions = (await inquirer.prompt(toolQuestions)).options
+		}
+	} else {
+		//if Standard
+		toolOptions = ['ESLint', 'Prettier', 'Tailwind Prettier']
+	}
 
 	if (techOptions.includes('Prisma ORM'))
 		var configOptions = (await inquirer.prompt(configQuestions)).options
@@ -204,7 +209,7 @@ async function promptForMissingOptions(options) {
 	//Tooling
 	const eslint = toolOptions.includes('ESLint')
 	const prettier = toolOptions.includes('Prettier')
-	const tailwindPrettier = (toolOptions.includes('Tailwind Prettier') && prettier) ? true : false
+	const tailwindPrettier = toolOptions.includes('Tailwind Prettier') && prettier ? true : false
 	const headlessUI = toolOptions.includes('Headless UI')
 	const heroIcons = toolOptions.includes('HeroIcons')
 
