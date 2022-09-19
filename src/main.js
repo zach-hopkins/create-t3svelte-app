@@ -1,6 +1,5 @@
 import chalk from 'chalk'
-import fs from 'fs'
-import ncp from 'ncp'
+import fs from 'fs-extra'
 import path from 'path'
 import { promisify } from 'util'
 import { execa } from 'execa'
@@ -10,12 +9,9 @@ import { projectInstall } from 'pkg-install'
 
 const __filename = fileURLToPath(import.meta.url);
 const access = promisify(fs.access)
-const copy = promisify(ncp)
 
 async function copyTemplateFiles(options, templateName, templateBaseDir) {
-	copy(options.templateDirectory, options.targetDirectory, {
-		clobber: true,
-	})
+	await fs.copy(options.templateDirectory, options.targetDirectory)
 	if (templateName != 'standard') await copyOptionalFiles(options, templateBaseDir)
 	return
 }
@@ -74,9 +70,7 @@ async function copyOptionalFiles(options, templateBaseDir) {
 
 	for (let urlIndex in dirArray) {
 		console.log(dirArray[urlIndex])
-		copy(dirArray[urlIndex], options.targetDirectory, {
-			clobber: true,
-		})
+		fs.copySync(dirArray[urlIndex], options.targetDirectory)
 	}
 
 	return
