@@ -151,7 +151,7 @@ export async function createT3SvelteApp(options) {
 	const templateName = options.template.toLowerCase()
 	let templateDir = ''
 
-	if (templateName == 'standard') templateDir = templateBaseDir + '/standard_typescript'
+	if (templateName == 'standard') templateDir = templateBaseDir + '/standard'
 	else if (templateName == 'custom: typescript') templateDir = templateBaseDir + '/base_typescript'
 	else templateDir = templateBaseDir + '/base_javascript'
 

@@ -134,8 +134,10 @@ async function promptForMissingOptions(options) {
 	/* Process Forks and Prompt Questions */
 
 	const baseTemplate = await inquirer.prompt(baseQuestion) //get base template
-	let techOptions = {}
+	let techOptions = []
+  let toolOptions = []
 	let requireURI = false
+  let isStandard = false
 
 	switch (baseTemplate.template) {
 		case 'Custom: TypeScript':
@@ -148,9 +150,15 @@ async function promptForMissingOptions(options) {
 			break
 		default: //standard
 			techOptions = ['tRPC', 'Prisma ORM', 'Tailwind CSS', 'TypeScript']
+      isStandard = true
 	}
 
-	const toolOptions = (await inquirer.prompt(toolQuestions)).options
+  if (!isStandard) {
+	  toolOptions = (await inquirer.prompt(toolQuestions)).options
+  }
+  else {
+    toolOptions = ['ESLint', 'Prettier', 'Tailwind Prettier']
+  }
 
 	if (techOptions.includes('Prisma ORM'))
 		var configOptions = (await inquirer.prompt(configQuestions)).options
