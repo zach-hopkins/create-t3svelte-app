@@ -136,7 +136,10 @@ async function initGit(options) {
 	const result = await execa('git', ['init'], {
 		cwd: options.targetDirectory,
 	})
+	fs.copySync(options.templateDirectory + '/.gitignore', options.targetDirectory + '/.gitignore')
+
 	if (result.failed) {
+		console.log('Failed to init git')
 		return Promise.reject(new Error('Failed to initialize git'))
 	}
 	return
