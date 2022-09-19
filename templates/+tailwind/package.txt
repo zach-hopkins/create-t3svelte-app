@@ -1,0 +1,1 @@
+npm install --save -D --package-lock-only --no-package-lock postcss autoprefixer tailwindcss @tailwindcss/forms

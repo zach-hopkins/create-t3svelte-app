@@ -12,10 +12,86 @@ const __filename = fileURLToPath(import.meta.url);
 const access = promisify(fs.access)
 const copy = promisify(ncp)
 
-async function copyTemplateFiles(options) {
-	return copy(options.templateDirectory, options.targetDirectory, {
+async function copyTemplateFiles(options, templateName, templateBaseDir) {
+	copy(options.templateDirectory, options.targetDirectory, {
 		clobber: true,
 	})
+	if (templateName != 'standard') await copyOptionalFiles(options, templateBaseDir)
+	return
+}
+
+async function copyOptionalFiles(options, templateBaseDir) {
+	let dirArray = []
+	let selectedOptionals = []
+	const scriptLang = options.scriptLang.toLowerCase()
+	
+	for (const [key, value] of Object.entries(options.optionals)) {
+		console.log(`${key} ${value}`)
+		if (value === true) selectedOptionals.push(key)
+	  }
+
+	/* set dirs for optional additions */
+
+	//Tech Stack
+	if (selectedOptionals.includes('prisma') && selectedOptionals.includes('trpc'))
+		dirArray.push(templateBaseDir + '+prisma_trpc')
+	else if (selectedOptionals.includes('trpc'))
+		dirArray.push(templateBaseDir + '+trpc')
+	else if (selectedOptionals.includes('prisma'))
+		dirArray.push(templateBaseDir + '+prisma')
+
+	if (selectedOptionals.includes('tailwind'))
+	  dirArray.push(templateBaseDir + '+tailwind')
+
+	//Tooling
+	if (selectedOptionals.includes('eslint') && selectedOptionals.includes('prettier')) {
+		if (scriptLang == 'typescript')
+			dirArray.push(templateBaseDir + '+eslint_prettier_typescript')
+		else
+			dirArray.push(templateBaseDir + '+eslint_prettier_javascript')
+	}
+	else if (selectedOptionals.includes('eslint')) {
+		if (scriptLang == 'typescript')
+			dirArray.push(templateBaseDir + '+eslint_typescript')
+		else
+			dirArray.push(templateBaseDir + '+eslint_javascript')
+	}
+	else if (selectedOptionals.includes('prettier'))
+		dirArray.push(templateBaseDir + '+prettier')
+
+	if (selectedOptionals.includes('heroIcons'))
+		dirArray.push(templateBaseDir + '+heroicons')
+	
+	if (selectedOptionals.includes('headlessUI'))
+		dirArray.push(templateBaseDir + '+headlessui')
+
+	if (selectedOptionals.includes('tailwindPrettier'))
+		dirArray.push(templateBaseDir + '+tailwind_prettier_plugin')
+
+	console.log("Paths: " + dirArray)
+
+	//const npmCommands = await compileInstalls(dirArray)
+
+	for (let urlIndex in dirArray) {
+		console.log(dirArray[urlIndex])
+		copy(dirArray[urlIndex], options.targetDirectory, {
+			clobber: true,
+		})
+	}
+
+	return
+
+}
+
+async function compileInstalls(dirArray) {
+	//read package.txt for each optional package to configure package.json
+	let npmCommands = []
+		for (let urlIndex in dirArray) {
+			let lines = fs.readFileSync(dirArray[urlIndex] + '/package.txt', 'utf8').replace("\n","")
+				npmCommands.push(lines)
+		}
+	return npmCommands
+
 }
 
 async function configureDatabase(options) {
@@ -79,8 +155,14 @@ export async function createT3SvelteApp(options) {
 		...options,
 		targetDirectory: options.targetDirectory || process.cwd(),
 	}
+	const templateBaseDir = path.resolve(__filename, '../../templates')
+	const templateName = options.template.toLowerCase()
+	let templateDir = ''
 
-	const templateDir = path.resolve(__filename, '../../templates', options.template.toLowerCase())
+	if (templateName == 'standard') templateDir = templateBaseDir + '/standard_typescript'
+	else if (templateName == 'custom: typescript') templateDir = templateBaseDir + '/base_typescript'
+	else templateDir = templateBaseDir + '/base_javascript'
+
 	options.templateDirectory = templateDir
 
 	try {
@@ -91,12 +173,10 @@ export async function createT3SvelteApp(options) {
 		process.exit(1)
 	}
 
-	await copyTemplateFiles(options)
-
 	const tasks = new Listr([
 		{
 			title: 'Copy project files',
-			task: () => copyTemplateFiles(options),
+			task: () => copyTemplateFiles(options, templateName, templateBaseDir + "/"),
 		},
 		{
 			title: 'Initialize git',
