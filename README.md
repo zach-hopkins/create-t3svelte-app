@@ -35,8 +35,8 @@
   * [yarn](#yarn)
   * [Prisma Requirements](#prisma-requirements)
 * [Available Templates](#available-templates)
-  * [Standard](#standard)
-  * [Standard + UI Extras](#standard--ui-extras)
+  * [Standard](#standard-recommended)
+  * [Custom (Modular)](#custom-modular-build)
 * [Contributing](#contributing)
 * [Caveats & Addendums](#caveats--addendums)
   * [Server-Side Rendering](#server-side-rendering)
@@ -71,20 +71,40 @@ If you choose not to init DB on first build, you can initialize prisma db at any
 
 ## Available Templates
 
-A simple CLI with highly opinionated, out-of-the-box ready SvelteKit/tRPC/Prisma/Tailwind application. CLI options include 'Standard' and 'Standard + UI Extras' (customization soon). Just run and start building.
+A simple CLI with highly opinionated, out-of-the-box ready SvelteKit/tRPC/Prisma/Tailwind application. CLI options include 'Standard' and 'Custom' (modular build). Just run and start building.
 
-### Standard
+### Standard (Recommended)
 
 - **SvelteKit**
+- **TypeScript**
 - **tRPC** - preconfigured with example API call in `+page.svelte`
 - **Tailwind CSS** - preconfigured with eslint/prettier & 'tailwind prettier plugin' integration
 - **Prisma ORM** - CLI option to initialize DB on run - no need to run `prisma db pull` or `prisma db generate`
 
-### Standard + UI Extras
+### Custom (Modular Build)
 
-- **Standard**
-- **Headless UI**
-- **HeroIcons**
+#### Tech Stack Options:
+
+- SvelteKit
+- TypeScript || JavaScript
+- tRPC
+- Tailwind CSS
+- Prisma ORM
+
+#### Tool Options:
+
+- ESLint
+- Prettier
+- Tailwind Prettier Plugin
+- Prisma ORM
+- Svelte Headless UI
+- Svelte HeroIcons
+
+#### Config Options:
+
+- Git Init
+- DB Auto Configure w/ Prisma (Postgresql, MySQL, MongoDB, SQLite)
+- Auto Dependency Install
 
 ## Contributing
 
