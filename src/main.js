@@ -6,7 +6,7 @@ import { execa } from 'execa'
 import { fileURLToPath } from 'url'
 import Listr from 'listr'
 import { projectInstall } from 'pkg-install'
-import { exec, execSync } from 'child_process'
+import { exec } from 'child_process'
 
 const __filename = fileURLToPath(import.meta.url)
 const access = promisify(fs.access)
@@ -71,7 +71,7 @@ async function copyOptionalFiles(options, templateBaseDir) {
 	}
 
 	//cleanup package.txt
-	execSync('rm package.txt', { encoding: 'utf-8' })
+	fs.removeSync(options.targetDirectory + '/package.txt')
 
 	return
 }
