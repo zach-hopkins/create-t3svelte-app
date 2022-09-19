@@ -152,7 +152,7 @@ function parseArgumentsIntoOptions(rawArgs) {
       var configOptions = (await inquirer.prompt(configQuestionsNoPrisma)).options
     
 
-    const needsDatabase = toolOptions.includes("Configure database") ? true : false
+    const needsDatabase = configOptions.includes("Configure database") ? true : false
     if (needsDatabase)
       var dbSolutionAnswers = await inquirer.prompt(dbSolutions)
 

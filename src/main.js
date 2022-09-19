@@ -6,6 +6,7 @@ import { execa } from 'execa'
 import { fileURLToPath } from 'url';
 import Listr from 'listr'
 import { projectInstall } from 'pkg-install'
+import { exec, execSync } from 'child_process'
 
 const __filename = fileURLToPath(import.meta.url);
 const access = promisify(fs.access)
@@ -22,7 +23,6 @@ async function copyOptionalFiles(options, templateBaseDir) {
 	const scriptLang = options.scriptLang.toLowerCase()
 	
 	for (const [key, value] of Object.entries(options.optionals)) {
-		console.log(`${key} ${value}`)
 		if (value === true) selectedOptionals.push(key)
 	  }
 
@@ -64,14 +64,26 @@ async function copyOptionalFiles(options, templateBaseDir) {
 	if (selectedOptionals.includes('tailwindPrettier'))
 		dirArray.push(templateBaseDir + '+tailwind_prettier_plugin')
 
-	console.log("Paths: " + dirArray)
-
-	//const npmCommands = await compileInstalls(dirArray)
+	const npmCommands = await compileInstalls(dirArray)
 
 	for (let urlIndex in dirArray) {
-		console.log(dirArray[urlIndex])
 		fs.copySync(dirArray[urlIndex], options.targetDirectory)
 	}
+
+	for (let commandIndex in npmCommands) {
+		await new Promise(function (resolve, reject) {
+			exec(npmCommands[commandIndex], (err, stdout, stderr) => {
+				if (err) {
+					reject(err)
+				}
+				else {
+					resolve({stdout, stderr})
+				}
+			})})
+	}
+
+	//cleanup package.txt
+	execSync('rm package.txt', { encoding: 'utf-8' });
 
 	return
 

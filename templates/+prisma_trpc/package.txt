@@ -1,1 +1,1 @@
-npm install --save --package-lock-only --no-package-lock prisma @trpc/client @trpc/server trpc-sveltekit trpc-transformer zod && npm install --save -D --package-lock-only --no-package-lock @prisma/client
+npm install --save --package-lock-only --no-package-lock @trpc/client @trpc/server trpc-sveltekit trpc-transformer zod && npm install --save -D --package-lock-only --no-package-lock @prisma/client prisma
