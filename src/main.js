@@ -11,9 +11,9 @@ import { exec, execSync } from 'child_process'
 const __filename = fileURLToPath(import.meta.url)
 const access = promisify(fs.access)
 
-async function copyTemplateFiles(options, templateName, templateBaseDir) {
+async function copyTemplateFiles(options, templateName = 'overwrites', templateBaseDir = '/') {
 	await fs.copy(options.templateDirectory, options.targetDirectory)
-	if (templateName != 'standard') await copyOptionalFiles(options, templateBaseDir)
+	if (templateName != 'standard' && templateName != 'overwrites') await copyOptionalFiles(options, templateBaseDir)
 	return
 }
 
