@@ -33,8 +33,6 @@
 * [Get Building](#get-building)
   * [npm](#npm)
   * [yarn](#yarn)
-* [More Info 🛠](#more-info-)
-  * [Early Version Note](#early-version-note)
   * [Prisma Requirements](#prisma-requirements)
 * [Available Templates](#available-templates)
   * [Standard](#standard)
@@ -47,6 +45,7 @@
 * [License](#license)
 
 ## Get Building
+<h4><i> create-t3svelte-app is completely modular. Choose the components you need! </i></h4>
 
 ✅ Elegant full-stack framework powered by [SvelteKit](https://kit.svelte.dev/)  
 ✅ Static typing support with [TypeScript](https://typescriptlang.org)  
@@ -65,17 +64,6 @@ npx create-t3svelte-app@latest
 ```bash
 yarn create t3svelte-app
 ```
-
-## More Info 🛠
-
-### Early Version Note
-
-This initial version is lacking significant polish that I hope to add in a new release shortly, including:
-
-- Less Opinions, More Customization (including prettier/eslint not as forced defaults)
-- SQLite as `schema.prisma` default ✅
-- Helper comments
-- Package Manager Support
 
 ### Prisma Requirements
 
