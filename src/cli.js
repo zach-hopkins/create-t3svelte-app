@@ -62,7 +62,7 @@ async function promptForMissingOptions(options) {
 		],
 	})
 
-	const toolQuestions = []
+	let toolQuestions = []
 
 	toolQuestions.push({
 		type: 'checkbox',
@@ -71,7 +71,7 @@ async function promptForMissingOptions(options) {
 		choices: [
 			{ name: 'ESLint', checked: true },
 			{ name: 'Prettier', checked: true },
-			{ name: 'Tailwind Prettier' },
+			{ name: 'Tailwind Prettier', checked: true },
 			{ name: 'Headless UI' },
 			{ name: 'HeroIcons' },
 		],
@@ -154,9 +154,16 @@ async function promptForMissingOptions(options) {
 	}
 
   if (!isStandard) {
-	  toolOptions = (await inquirer.prompt(toolQuestions)).options
+    if (techOptions.includes('Tailwind CSS'))
+	    toolOptions = (await inquirer.prompt(toolQuestions)).options
+    else //remove tailwind prettier from options
+    {
+      const tailwindPrettierIndex = toolQuestions[0].choices.map(object => object.name).indexOf('Tailwind Prettier')
+      toolQuestions[0].choices = [...toolQuestions[0].choices.slice(0, tailwindPrettierIndex), ...toolQuestions[0].choices.slice(tailwindPrettierIndex + 1)]
+      toolOptions = (await inquirer.prompt(toolQuestions)).options
+    }
   }
-  else {
+  else { //if Standard
     toolOptions = ['ESLint', 'Prettier', 'Tailwind Prettier']
   }
 
@@ -197,7 +204,7 @@ async function promptForMissingOptions(options) {
 	//Tooling
 	const eslint = toolOptions.includes('ESLint')
 	const prettier = toolOptions.includes('Prettier')
-	const tailwindPrettier = toolOptions.includes('Tailwind Prettier')
+	const tailwindPrettier = (toolOptions.includes('Tailwind Prettier') && prettier) ? true : false
 	const headlessUI = toolOptions.includes('Headless UI')
 	const heroIcons = toolOptions.includes('HeroIcons')
 
