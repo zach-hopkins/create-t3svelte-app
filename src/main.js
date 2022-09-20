@@ -13,6 +13,8 @@ const access = promisify(fs.access)
 
 async function copyTemplateFiles(options, templateName = 'overwrites', templateBaseDir = '/') {
 	await fs.copy(options.templateDirectory, options.targetDirectory)
+	await fs.writeFile(options.targetDirectory + "/.npmrc", "engine-strict=true")
+	await fs.writeFile(options.targetDirectory + "/.gitignore", ".DS_Store\nnode_modules\n/build\n/.svelte-kit\n/package\n.env")
 	if (templateName != 'standard' && templateName != 'overwrites') await copyOptionalFiles(options, templateBaseDir)
 	return
 }
@@ -130,7 +132,6 @@ async function initGit(options) {
 	const result = await execa('git', ['init'], {
 		cwd: options.targetDirectory,
 	})
-	fs.copySync(options.templateDirectory + '/.gitignore', options.targetDirectory + '/.gitignore')
 
 	if (result.failed) {
 		console.log('Failed to init git')
