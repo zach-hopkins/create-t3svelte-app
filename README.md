@@ -75,11 +75,11 @@ A simple CLI with highly opinionated, out-of-the-box ready SvelteKit/tRPC/Prisma
 
 ### Standard (Recommended)
 
-- **SvelteKit**
-- **TypeScript**
-- **tRPC** - preconfigured with example API call in `+page.svelte`
-- **Tailwind CSS** - preconfigured with eslint/prettier & 'tailwind prettier plugin' integration
-- **Prisma ORM** - CLI option to initialize DB on run - no need to run `prisma db pull` or `prisma db generate`
+- [**SvelteKit**](https://kit.svelte.dev/)
+- [**TypeScript**](https://www.typescriptlang.org/)
+- [**tRPC**](https://trpc.io/) - preconfigured with example API call in `+page.svelte`
+- [**Tailwind CSS**](https://tailwindcss.com/) - preconfigured with eslint/prettier & 'tailwind prettier plugin' integration
+- [**Prisma ORM**](https://www.prisma.io/) - CLI option to initialize DB on run - no need to run `prisma db pull` or `prisma db generate`
 
 ### Custom (Modular Build)
 
@@ -93,12 +93,12 @@ A simple CLI with highly opinionated, out-of-the-box ready SvelteKit/tRPC/Prisma
 
 #### Tool Options:
 
-- ESLint
-- Prettier
-- Tailwind Prettier Plugin
-- Prisma ORM
-- Svelte Headless UI
-- Svelte HeroIcons
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [Tailwind Prettier Plugin](https://github.com/tailwindlabs/prettier-plugin-tailwindcss)
+- [Prisma ORM](https://www.prisma.io/)
+- [Svelte Headless UI](https://github.com/rgossiaux/svelte-headlessui)
+- [Svelte HeroIcons](https://github.com/JustinVoitel/svelte-hero-icons)
 
 #### Config Options:
 
