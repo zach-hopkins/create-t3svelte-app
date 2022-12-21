@@ -57,6 +57,7 @@ async function copyOptionalFiles(options, templateBaseDir) {
     dirArray.push(templateBaseDir + '+prisma_trpc')
   else if (selectedOptionals.includes('trpc')) dirArray.push(templateBaseDir + '+trpc')
   else if (selectedOptionals.includes('prisma')) dirArray.push(templateBaseDir + '+prisma')
+  else if (selectedOptionals.includes('svelteKitAuth')) dirArray.push(templateBaseDir + '+sveltekitauth')
 
   if (selectedOptionals.includes('tailwind')) dirArray.push(templateBaseDir + '+tailwind')
 
