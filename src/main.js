@@ -55,6 +55,8 @@ async function copyOptionalFiles(options, templateBaseDir) {
   //Tech Stack
   if (selectedOptionals.includes('prisma') && selectedOptionals.includes('trpc'))
     dirArray.push(templateBaseDir + '+prisma_trpc')
+  else if (selectedOptionals.includes('prisma') && selectedOptionals.includes('svelteKitAuth'))
+    dirArray.push(templateBaseDir + '+prisma_sveltekitauth')
   else if (selectedOptionals.includes('trpc')) dirArray.push(templateBaseDir + '+trpc')
   else if (selectedOptionals.includes('prisma')) dirArray.push(templateBaseDir + '+prisma')
   else if (selectedOptionals.includes('svelteKitAuth')) dirArray.push(templateBaseDir + '+sveltekitauth')
