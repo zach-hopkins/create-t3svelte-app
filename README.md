@@ -1,5 +1,6 @@
 <p align="center">
   <img src="https://user-images.githubusercontent.com/43737355/189502485-be99e3ce-272b-49a9-abe8-5496238dfbb3.png" alt="T3-SvelteKit" />
+  <h2 align="center"><b>*Looking for Maintainers! Message me...*</p></b>
 </p>
 
 <h1 align="center">create-t3svelte-app</h1>
