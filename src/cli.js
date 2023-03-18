@@ -47,6 +47,7 @@ async function promptForMissingOptions(options) {
 			{ name: 'tRPC', checked: true },
 			{ name: 'Prisma ORM', checked: true },
 			{ name: 'Tailwind CSS', checked: true },
+      { name: 'SvelteKit Auth', checked: true }
 		],
 	})
 
@@ -59,6 +60,7 @@ async function promptForMissingOptions(options) {
 		choices: [
 			{ name: 'Prisma ORM', checked: true },
 			{ name: 'Tailwind CSS', checked: true },
+      { name: 'SvelteKit Auth', checked: true }
 		],
 	})
 
@@ -205,6 +207,7 @@ async function promptForMissingOptions(options) {
 	const prisma = techOptions.includes('Prisma ORM')
 	const scriptLang = techOptions.includes('TypeScript') ? 'TypeScript' : 'JavaScript'
 	const tailwind = techOptions.includes('Tailwind CSS')
+  const svelteKitAuth = techOptions.includes('SvelteKit Auth')
 
 	//Tooling
 	const eslint = toolOptions.includes('ESLint')
@@ -228,6 +231,7 @@ async function promptForMissingOptions(options) {
 			trpc: trpc,
 			prisma: prisma,
 			tailwind: tailwind,
+      svelteKitAuth: svelteKitAuth,
 
 			//Tooling
 			eslint: eslint,
